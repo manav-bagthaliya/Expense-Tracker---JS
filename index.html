@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css" />
+  <title>Expense Tracker</title>
+</head>
+
+<body>
+
+  <h1>💰 Expense Tracker</h1>
+
+  <!-- Summary -->
+
+  <div class="summary">
+    <h2>Balance: ₹<span id="updatedBal">0</span></h2>
+
+
+<div class="total">
+  <div>
+    <p>Total Income</p>
+    <h3 id="updatedInc">0</h3>
+  </div>
+
+  <div>
+    <p>Total Expense</p>
+    <h3 id="updatedExp">0</h3>
+  </div>
+</div>
+
+  </div>
+
+  <!-- Main -->
+
+  <div class="root">
+
+<!-- Table -->
+<div id="items">
+  <h2>Transactions</h2>
+  <table id="table">
+    <tr class="titles">
+      <th>#</th>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Type</th>
+      <th>Delete</th>
+    </tr>
+  </table>
+</div>
+
+<!-- Form -->
+<div id="new">
+  <h2>Add New</h2>
+
+  <div class="inputs">
+    <div class="inputitem">
+      <p>Type:</p>
+      <select id="itemType">
+        <option value="0">Expense</option>
+        <option value="1">Income</option>
+      </select>
+    </div>
+
+    <div class="inputitem">
+      <p>Name:</p>
+      <input id="name" type="text" placeholder="Enter name" />
+    </div>
+
+    <div class="inputitem">
+      <p>Amount:</p>
+      <input id="amount" type="number" placeholder="Enter amount" />
+    </div>
+  </div>
+
+  <button onclick="addItem()">Add</button>
+</div>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
