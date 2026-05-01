@@ -57,6 +57,13 @@ alert("Please fill all fields properly");
 return;
 }
 
+const today = new Date().toISOString().split("T")[0];
+
+if (date > today) {
+  alert("Future dates are not allowed");
+  return;
+}
+
 const newEntry = {
 id: Date.now(),
 type: type,
@@ -115,3 +122,4 @@ updateSummary();
 
 // Initial load
 updateTable();
+document.getElementById("date").max = new Date().toISOString().split("T")[0];
