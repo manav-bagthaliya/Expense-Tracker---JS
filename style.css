@@ -1,6 +1,6 @@
 body {
 font-family: Arial;
-background: linear-gradient(135deg, #667eea, #764ba2);
+background: linear-gradient(135deg, #9e8d8d, #764ba2);
 color: #333;
 text-align: center;
 }
@@ -66,5 +66,5 @@ cursor: pointer;
 }
 
 button:hover {
-background: #5a67d8;
+background: #000000;
 }

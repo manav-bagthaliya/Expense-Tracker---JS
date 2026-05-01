@@ -1,18 +1,37 @@
+/* =========================
+Expense Tracker Script
+========================= */
+
+// Load data from localStorage or start empty
 let tableEntries = JSON.parse(localStorage.getItem("expenses")) || [];
 
-// Save to localStorage
+// Save data to localStorage
 function saveData() {
 localStorage.setItem("expenses", JSON.stringify(tableEntries));
 }
 
-// Update Summary
+// Format date (optional but cleaner display)
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+
+  return `${day}-${month}-${year}`;
+}
+
+// Update summary (income, expense, balance)
 function updateSummary() {
 let totalIncome = 0;
 let totalExpense = 0;
 
-tableEntries.forEach(e => {
-if (e.type === 1) totalIncome += e.amount;
-else totalExpense += e.amount;
+tableEntries.forEach(entry => {
+if (entry.type === 1) {
+totalIncome += entry.amount;
+} else {
+totalExpense += entry.amount;
+}
 });
 
 updatedInc.innerText = totalIncome;
@@ -20,22 +39,30 @@ updatedExp.innerText = totalExpense;
 updatedBal.innerText = totalIncome - totalExpense;
 }
 
-// Add Item
+// Add new item (with date)
 function addItem() {
-let type = Number(itemType.value);
-let name = document.getElementById("name").value;
-let amount = Number(document.getElementById("amount").value);
+const type = Number(itemType.value);
 
-if (!name || amount <= 0) {
-alert("Enter valid data");
+const nameInput = document.getElementById("name");
+const amountInput = document.getElementById("amount");
+const dateInput = document.getElementById("date");
+
+const name = nameInput.value.trim();
+const amount = Number(amountInput.value);
+const date = dateInput.value;
+
+// validation
+if (name === "" || amount <= 0 || date === "") {
+alert("Please fill all fields properly");
 return;
 }
 
 const newEntry = {
-id: Date.now(),   // 🔥 unique ID
-type,
-name,
-amount
+id: Date.now(),
+type: type,
+name: name,
+amount: amount,
+date: date
 };
 
 tableEntries.push(newEntry);
@@ -43,40 +70,48 @@ tableEntries.push(newEntry);
 saveData();
 updateTable();
 
-document.getElementById("name").value = "";
-document.getElementById("amount").value = "";
+// reset inputs
+nameInput.value = "";
+amountInput.value = "";
+dateInput.value = "";
 }
 
-// Load Items
-function loadItems(e, i) {
-let table = document.getElementById("table");
-let row = table.insertRow();
+// Load a single row
+function loadItems(entry, index) {
+const table = document.getElementById("table");
+const row = table.insertRow();
 
-row.innerHTML = `     <td>${i + 1}</td>     <td>${e.name}</td>     <td>₹${e.amount}</td>     <td style="color:${e.type === 1 ? 'green' : 'red'}">
-      ${e.type === 1 ? "⬆ Income" : "⬇ Expense"}     </td>     <td>       <button onclick="deleteItem(${e.id})">❌</button>     </td>
+row.innerHTML = `     <td>${index + 1}</td>     <td>${entry.name}</td>     <td>₹${entry.amount}</td>     <td>${formatDate(entry.date)}</td>     <td style="color: ${entry.type === 1 ? "green" : "red"}">
+      ${entry.type === 1 ? "Income" : "Expense"}     </td>     <td>       <button onclick="deleteItem(${entry.id})">❌</button>     </td>
   `;
 }
 
-// Clear table
+// Clear table before rendering
 function clearTable() {
-let table = document.getElementById("table");
-table.innerHTML = `     <tr class="titles">       <th>#</th>       <th>Name</th>       <th>Amount</th>       <th>Type</th>       <th>Delete</th>     </tr>
+const table = document.getElementById("table");
+
+table.innerHTML = `     <tr class="titles">       <th>#</th>       <th>Name</th>       <th>Amount</th>       <th>Date</th>       <th>Type</th>       <th>Delete</th>     </tr>
   `;
 }
 
 // Delete item
 function deleteItem(id) {
-tableEntries = tableEntries.filter(e => e.id !== id);
+tableEntries = tableEntries.filter(entry => entry.id !== id);
+
 saveData();
 updateTable();
 }
 
-// Update Table
+// Re-render table + summary
 function updateTable() {
 clearTable();
-tableEntries.forEach((e, i) => loadItems(e, i));
+
+tableEntries.forEach((entry, index) => {
+loadItems(entry, index);
+});
+
 updateSummary();
 }
 
-// Initial Load
+// Initial load
 updateTable();
