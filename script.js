@@ -1,12 +1,9 @@
-// Load data from localStorage or start empty
 let tableEntries = JSON.parse(localStorage.getItem("expenses")) || [];
 
-// Save data to localStorage
 function saveData() {
 localStorage.setItem("expenses", JSON.stringify(tableEntries));
 }
 
-// Format date (optional but cleaner display)
 function formatDate(dateStr) {
   const date = new Date(dateStr);
 
@@ -17,7 +14,6 @@ function formatDate(dateStr) {
   return `${day}-${month}-${year}`;
 }
 
-// Update summary (income, expense, balance)
 function updateSummary() {
 let totalIncome = 0;
 let totalExpense = 0;
@@ -51,7 +47,6 @@ function getTotals() {
 }
 
 
-// Add new item (with date)
 function addItem() {
 const type = Number(itemType.value);
 
@@ -63,7 +58,6 @@ const name = nameInput.value.trim();
 const amount = Number(amountInput.value);
 const date = dateInput.value;
 
-// validation
 if (name === "" || amount <= 0 || date === "") {
 alert("Please fill all fields properly");
 return;
@@ -71,7 +65,6 @@ return;
 
 const { income, expense } = getTotals();
 
-// If it's an expense (type 0)
 if (type === 0) {
   const newTotalExpense = expense + amount;
 
@@ -101,7 +94,6 @@ tableEntries.push(newEntry);
 saveData();
 updateTable();
 
-// reset inputs
 nameInput.value = "";
 amountInput.value = "";
 dateInput.value = "";
@@ -122,7 +114,6 @@ row.innerHTML = `   <td>${index + 1}</td>
   `;
 }
 
-// Clear table before rendering
 function clearTable() {
 const table = document.getElementById("table");
 
@@ -138,7 +129,6 @@ table.innerHTML = `
   `;
 }
 
-// Delete item
 function deleteItem(id) {
 tableEntries = tableEntries.filter(entry => entry.id !== id);
 
@@ -146,7 +136,6 @@ saveData();
 updateTable();
 }
 
-// Re-render table + summary
 function updateTable() {
 clearTable();
 
@@ -157,6 +146,5 @@ loadItems(entry, index);
 updateSummary();
 }
 
-// Initial load
 updateTable();
 document.getElementById("date").max = new Date().toISOString().split("T")[0];
