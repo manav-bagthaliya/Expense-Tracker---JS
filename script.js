@@ -35,7 +35,6 @@ updatedExp.innerText = totalExpense;
 updatedBal.innerText = totalIncome - totalExpense;
 }
 
-
 function getTotals() {
   let income = 0;
   let expense = 0;
@@ -50,8 +49,6 @@ function getTotals() {
 
   return { income, expense };
 }
-
-
 
 
 // Add new item (with date)
@@ -115,7 +112,12 @@ function loadItems(entry, index) {
 const table = document.getElementById("table");
 const row = table.insertRow();
 
-row.innerHTML = `     <td>${index + 1}</td>     <td>${entry.name}</td>     <td>₹${entry.amount}</td>     <td>${formatDate(entry.date)}</td>     <td style="color: ${entry.type === 1 ? "green" : "red"}">
+row.innerHTML = `   <td>${index + 1}</td>    
+                    <td>${entry.name}</td> 
+                    <td>₹${entry.amount}</td>   
+                    <td>${formatDate(entry.date)}</td> 
+                    <td style="color: ${entry.type === 1 ? "green" : "red"}">
+
       ${entry.type === 1 ? "Income" : "Expense"}     </td>     <td>       <button onclick="deleteItem(${entry.id})">❌</button>     </td>
   `;
 }
@@ -124,7 +126,15 @@ row.innerHTML = `     <td>${index + 1}</td>     <td>${entry.name}</td>     <td>�
 function clearTable() {
 const table = document.getElementById("table");
 
-table.innerHTML = `     <tr class="titles">       <th>#</th>       <th>Name</th>       <th>Amount</th>       <th>Date</th>       <th>Type</th>       <th>Delete</th>     </tr>
+table.innerHTML = `    
+                  <tr class="titles">     
+                  <th>#</th>    
+                  <th>Name</th>    
+                  <th>Amount</th>  
+                  <th>Date</th>  
+                  <th>Type</th>  
+                  <th>Delete</th>  
+                  </tr>
   `;
 }
 
