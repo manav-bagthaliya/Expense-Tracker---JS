@@ -1,4 +1,4 @@
-# 💸 JavaScript Expense Tracker
+#  JavaScript Expense Tracker
 
 A simple and interactive **Expense Tracker Web App** using JavaScript, HTML and CSS.
 It allows users to manage their income and expenses with persistent storage using **localStorage**.
@@ -18,7 +18,7 @@ It allows users to manage their income and expenses with persistent storage usin
 
 ---
 
-## 🧠 Concepts Used
+##  Concepts Used
 
 - DOM Manipulation
 - Event Handling
