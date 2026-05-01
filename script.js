@@ -1,7 +1,3 @@
-/* =========================
-Expense Tracker Script
-========================= */
-
 // Load data from localStorage or start empty
 let tableEntries = JSON.parse(localStorage.getItem("expenses")) || [];
 
@@ -39,6 +35,25 @@ updatedExp.innerText = totalExpense;
 updatedBal.innerText = totalIncome - totalExpense;
 }
 
+
+function getTotals() {
+  let income = 0;
+  let expense = 0;
+
+  tableEntries.forEach(entry => {
+    if (entry.type === 1) {
+      income += entry.amount;
+    } else {
+      expense += entry.amount;
+    }
+  });
+
+  return { income, expense };
+}
+
+
+
+
 // Add new item (with date)
 function addItem() {
 const type = Number(itemType.value);
@@ -55,6 +70,18 @@ const date = dateInput.value;
 if (name === "" || amount <= 0 || date === "") {
 alert("Please fill all fields properly");
 return;
+}
+
+const { income, expense } = getTotals();
+
+// If it's an expense (type 0)
+if (type === 0) {
+  const newTotalExpense = expense + amount;
+
+  if (newTotalExpense > income) {
+    alert("Stop Your expenses! You are exceeding your income.");
+    return;
+  }
 }
 
 const today = new Date().toISOString().split("T")[0];
